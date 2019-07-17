@@ -21,7 +21,7 @@ public class IpConverterInt {
     //lower and upper limit of the interval
     private static List<Integer> listRangeIp = null;
 
-    public static void main(String[] args) {
+    public static void main() {
 
         String filePathRangeIpCountries  = ".\\src\\RangeIpCountries.txt";
         String filePathIPAndTraffic = ".\\src\\IpAndTraffic.txt";

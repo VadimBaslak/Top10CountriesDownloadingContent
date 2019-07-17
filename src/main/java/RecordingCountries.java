@@ -10,7 +10,7 @@ public class RecordingCountries {
         return "" + (char)(97+Math.random()*26) + (char)(97+Math.random()*26);
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         String filePath = ".\\src\\RangeIpCountries.txt";
 
         try {
@@ -20,7 +20,7 @@ public class RecordingCountries {
             int secondPower = firstPower + rangeLength;
             int maxNumberIP=(int)Math.pow(2,31);
 
-            for (int NumberCountries = 0; NumberCountries < 10000; NumberCountries++) {
+            for (int NumberCountries = 0; NumberCountries < 1000000; NumberCountries++) {
                 bufferWriter.write("<" + firstPower + ">" + "-<" + secondPower + "> <" + randomCountryCode() + ">\n");
                 firstPower = secondPower + 1;
                 secondPower = secondPower + rangeLength;

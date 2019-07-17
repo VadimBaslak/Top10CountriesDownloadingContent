@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class RecordingIp {
-    public static void main(String[] args) {
+    public static void main() {
         String filePath = ".\\src\\IpAndTraffic.txt";
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));

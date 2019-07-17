@@ -1,0 +1,3 @@
+A console application that gives the top 10 countries in terms of downloadable content (volume).
+It is known: ranges of IP addresses belonging to countries (the format of the lines: <integer> - <integer> <country code>).
+We receive a text log of IP addresses and their traffic volume (line format: xxx.xxx.xxx.xxx \ t <number>).
