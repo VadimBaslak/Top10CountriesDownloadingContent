@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class IpConverterInt {
     //the lower limit of the interval -> country code
-    static Map<Long, String> rangeIpCountries = null;
+    private static Map<Long, String> rangeIpCountries = null;
     //country code -> traffic volume
-    static Map<String, Long> countriesTraffic = null;
+    private static Map<String, Long> countriesTraffic = null;
     //lower and upper limit of the interval
-    static List<Long> listRangeIp = null;
+    private static List<Long> listRangeIp = null;
 
     public static void main(String[] args) {
 
@@ -32,11 +32,11 @@ public class IpConverterInt {
             listRangeIp = new ArrayList<>();
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRangeIpCountries)));
             while ((strLine = br.readLine()) != null) {
-                long leftLimit = leftLimit(strLine);
-                long rightLimit = rightLimit(strLine);
+                long leftLimit = getLeftLimit(strLine);
+                long rightLimit = getRightLimit(strLine);
                 listRangeIp.add(leftLimit);
                 listRangeIp.add(rightLimit);
-                rangeIpCountries.put(leftLimit,countriesCode(strLine));
+                rangeIpCountries.put(leftLimit,getCountriesCode(strLine));
             }
             listRangeIp.sort(Long::compareTo);
         } catch (IOException e) {
@@ -60,8 +60,7 @@ public class IpConverterInt {
                 long traffic = Integer.parseInt(trafficString);
                 long ipNumber = ipConverterLong(ipString);
                 int lowerBound = 0;
-                int upperBound = sizeListRageIP;
-                addIpCountriesTraffic(ipNumber, traffic, lowerBound, upperBound);
+                addIpCountriesTraffic(ipNumber, traffic, lowerBound, sizeListRageIP);
             }
             viewTop10CountriesDownloadingContent();
 
@@ -70,7 +69,7 @@ public class IpConverterInt {
         }
     }
 
-    public static void addIpCountriesTraffic(long ipNumber, long traffic, int lowerBound, int upperBound){
+    private static void addIpCountriesTraffic(long ipNumber, long traffic, int lowerBound, int upperBound){
         int medium;
         while (true){
             medium = (lowerBound + upperBound)/2;
@@ -106,29 +105,27 @@ public class IpConverterInt {
         }
     }
 
-    public static void viewTop10CountriesDownloadingContent(){
+    private static void viewTop10CountriesDownloadingContent(){
         countriesTraffic.entrySet().stream()
                 .sorted(Map.Entry.<String, Long>comparingByValue().reversed()).limit(10)
                 .forEach(System.out::println);
     }
 
-    public static long leftLimit(String strLine){
+    private static long getLeftLimit(String strLine){
         String leftLimitStr = strLine.substring(strLine.indexOf("<") + 1, strLine.indexOf(">-"));
-        long leftLimitInt = Long.parseLong(leftLimitStr);
-        return leftLimitInt;
+        return Long.parseLong(leftLimitStr);
     }
 
-    public static long rightLimit(String strLine){
+    private static long getRightLimit(String strLine){
         String RightLimitStr = strLine.substring(strLine.indexOf("-<") + 1, strLine.indexOf("> "));
-        long rightLimitInt = Long.parseLong(RightLimitStr.substring(1));
-        return rightLimitInt;
+        return Long.parseLong(RightLimitStr.substring(1));
     }
 
-    public static String countriesCode(String strLine){
+    private static String getCountriesCode(String strLine){
         return strLine.substring(strLine.indexOf(" <") + 2, strLine.indexOf(" <") + 4);
     }
 
-    public static long ipConverterLong(String strLineIP){
+    private static long ipConverterLong(String strLineIP){
         long[] ip = new long[4];
         long ipNumbers = 0;
         String[] parts = strLineIP.split("\\.");

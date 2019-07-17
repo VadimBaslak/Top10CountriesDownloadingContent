@@ -9,6 +9,7 @@ public class RecordingCountries {
     private static String randomCountryCode(){
         return "" + (char)(97+Math.random()*26) + (char)(97+Math.random()*26);
     }
+
     public static void main(String[] args) {
         String filePath = "C:\\dev\\JavaProjects\\Top10CountriesDownloadingContent\\src\\Resources\\RangeIpCountries.txt";
 

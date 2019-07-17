@@ -20,7 +20,7 @@ public class RecordingIp {
 
     }
 
-    static String random(int range) {
+    private static String random(int range) {
         int resultInt = (int) (range * Math.random());
         String resultString;
         if (resultInt > 99) {
