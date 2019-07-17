@@ -15,12 +15,12 @@ public class RecordingCountries {
 
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
-            int rangeLength = 1000000000;
+            int rangeLength = 10000;
             int firstPower = (int)Math.pow(2,31)+1;
             int secondPower = firstPower + rangeLength;
             int maxNumberIP=(int)Math.pow(2,31);
-            
-            for (int NumberCountries = 0; NumberCountries < 10; NumberCountries++) {
+
+            for (int NumberCountries = 0; NumberCountries < 100000; NumberCountries++) {
                 bufferWriter.write("<" + firstPower + ">" + "-<" + secondPower + "> <" + randomCountryCode() + ">\n");
                 firstPower = secondPower + 1;
                 secondPower = secondPower + rangeLength;
