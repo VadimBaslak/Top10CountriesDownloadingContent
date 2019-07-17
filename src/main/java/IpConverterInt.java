@@ -1,4 +1,4 @@
-package Application;
+package main.java;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -23,8 +23,8 @@ public class IpConverterInt {
 
     public static void main(String[] args) {
 
-        String filePathRangeIpCountries  = "C:\\dev\\JavaProjects\\Top10CountriesDownloadingContent\\src\\Resources\\RangeIpCountries.txt";
-        String filePathIPAndTraffic = "C:\\dev\\JavaProjects\\Top10CountriesDownloadingContent\\src\\Resources\\IpAndTraffic.txt";
+        String filePathRangeIpCountries  = ".\\src\\RangeIpCountries.txt";
+        String filePathIPAndTraffic = ".\\src\\IpAndTraffic.txt";
         /*
         Reading a text file of IP-address ranges given to different countries
         Filling rangeIpCountries and listRangeIP
