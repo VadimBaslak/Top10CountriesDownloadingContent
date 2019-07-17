@@ -4,18 +4,22 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//test
 public class IpConverterInt {
     //the lower limit of the interval -> country code
-    private static Map<Long, String> rangeIpCountries = null;
+    private static Map<Integer, String> rangeIpCountries = null;
     //country code -> traffic volume
-    private static Map<String, Long> countriesTraffic = null;
+    private static Map<String, Integer> countriesTraffic = null;
     //lower and upper limit of the interval
-    private static List<Long> listRangeIp = null;
+    private static List<Integer> listRangeIp = null;
 
     public static void main(String[] args) {
 
@@ -32,13 +36,13 @@ public class IpConverterInt {
             listRangeIp = new ArrayList<>();
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRangeIpCountries)));
             while ((strLine = br.readLine()) != null) {
-                long leftLimit = getLeftLimit(strLine);
-                long rightLimit = getRightLimit(strLine);
+                int leftLimit = getLeftLimit(strLine);
+                int rightLimit = getRightLimit(strLine);
                 listRangeIp.add(leftLimit);
                 listRangeIp.add(rightLimit);
                 rangeIpCountries.put(leftLimit,getCountriesCode(strLine));
             }
-            listRangeIp.sort(Long::compareTo);
+            listRangeIp.sort(Integer::compareTo);
         } catch (IOException e) {
             System.out.println("Output error RangeIpCountries");
         }
@@ -57,8 +61,8 @@ public class IpConverterInt {
             while ((strLine = br.readLine()) != null) {
                 String ipString = strLine.substring(0, 15);
                 String trafficString = strLine.substring(16);
-                long traffic = Integer.parseInt(trafficString);
-                long ipNumber = ipConverterLong(ipString);
+                int traffic = Integer.parseInt(trafficString);
+                int ipNumber = ipConverterInt(ipString);
                 int lowerBound = 0;
                 addIpCountriesTraffic(ipNumber, traffic, lowerBound, sizeListRageIP);
             }
@@ -69,29 +73,29 @@ public class IpConverterInt {
         }
     }
 
-    private static void addIpCountriesTraffic(long ipNumber, long traffic, int lowerBound, int upperBound){
+    private static void addIpCountriesTraffic(int ipNumber, int traffic, int lowerBound, int upperBound){
         int medium;
         while (true){
             medium = (lowerBound + upperBound)/2;
             if (listRangeIp.get(medium) == ipNumber){
                 if(rangeIpCountries.containsKey(ipNumber)){
                     countriesTraffic.put(rangeIpCountries.get(listRangeIp.get(medium)),
-                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium)), 0L) + traffic);
+                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium)), 0) + traffic);
                     break;
                 } else {
                     countriesTraffic.put(rangeIpCountries.get(listRangeIp.get(medium-1)),
-                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium-1)), 0L) + traffic);
+                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium-1)), 0) + traffic);
                     break;
                 }
             } else if (lowerBound > upperBound){
                 if(medium%2==1){
                     countriesTraffic.put(rangeIpCountries.get(listRangeIp.get(medium-1)),
-                        countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium-1)), 0L) + traffic);
+                        countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium-1)), 0) + traffic);
                     break;
 
                 } else {
                     countriesTraffic.put(rangeIpCountries.get(listRangeIp.get(medium)),
-                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium)), 0L) + traffic);
+                            countriesTraffic.getOrDefault(rangeIpCountries.get(listRangeIp.get(medium)), 0) + traffic);
                     break;
                 }
             }
@@ -107,34 +111,34 @@ public class IpConverterInt {
 
     private static void viewTop10CountriesDownloadingContent(){
         countriesTraffic.entrySet().stream()
-                .sorted(Map.Entry.<String, Long>comparingByValue().reversed()).limit(10)
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).limit(10)
                 .forEach(System.out::println);
     }
 
-    private static long getLeftLimit(String strLine){
+    private static int getLeftLimit(String strLine){
         String leftLimitStr = strLine.substring(strLine.indexOf("<") + 1, strLine.indexOf(">-"));
-        return Long.parseLong(leftLimitStr);
+        return Integer.parseInt(leftLimitStr);
     }
 
-    private static long getRightLimit(String strLine){
+    private static int getRightLimit(String strLine){
         String RightLimitStr = strLine.substring(strLine.indexOf("-<") + 1, strLine.indexOf("> "));
-        return Long.parseLong(RightLimitStr.substring(1));
+        return Integer.parseInt(RightLimitStr.substring(1));
     }
 
     private static String getCountriesCode(String strLine){
         return strLine.substring(strLine.indexOf(" <") + 2, strLine.indexOf(" <") + 4);
     }
 
-    private static long ipConverterLong(String strLineIP){
-        long[] ip = new long[4];
-        long ipNumbers = 0;
-        String[] parts = strLineIP.split("\\.");
-        for (int i = 0; i < 4; i++) {
-            ip[i] = Long.parseLong(parts[i]);
+    private static int ipConverterInt(String strLineIP){
+        InetAddress i;
+        int intRepresentation = 0;
+        try {
+            i = InetAddress.getByName(strLineIP);
+            intRepresentation= ByteBuffer.wrap(i.getAddress()).getInt();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            System.out.println("Incorrect Ip-address");
         }
-        for (int i = 0; i < 4; i++) {
-            ipNumbers += ip[i] << (24 - (8 * i));
-        }
-        return ipNumbers;
+        return intRepresentation;
     }
 }
