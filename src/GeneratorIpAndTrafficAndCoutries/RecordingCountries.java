@@ -21,7 +21,7 @@ public class RecordingCountries {
             long secondPower = firstPower + rangeLength;
             long maxNumberIP=((long)Math.pow(2,32)-1);
 
-            for (int NumberCountries = 0; NumberCountries < 100000; NumberCountries++) {
+            for (int NumberCountries = 0; NumberCountries < 1000000; NumberCountries++) {
                 bufferWriter.write("<" + firstPower + ">" + "-<" + secondPower + "> <" + randomCountryCode() + ">\n");
                 firstPower = secondPower + 1;
                 secondPower = secondPower + rangeLength;
@@ -29,6 +29,9 @@ public class RecordingCountries {
                     bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
                     break;
                 }
+            }
+            if(secondPower<maxNumberIP){
+                bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
             }
 
 
