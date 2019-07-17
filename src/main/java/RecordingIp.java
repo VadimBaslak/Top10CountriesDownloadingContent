@@ -1,15 +1,15 @@
-package GeneratorIpAndTrafficAndCoutries;
+package main.java;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class RecordingIp {
-    public static void main(String[] args) {
-        String filePath = "C:\\dev\\JavaProjects\\Top10CountriesDownloadingContent\\src\\Resources\\IpAndTraffic.txt";
+    public static void main() {
+        String filePath = ".\\src\\IpAndTraffic.txt";
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
-            for (int NumberNewRows = 0; NumberNewRows < 10000000; NumberNewRows++) {
+            for (int NumberNewRows = 0; NumberNewRows < 1000000; NumberNewRows++) {
                 bufferWriter.write((random(256) + "." + random(256) + "." + random(256) +
                         "." + random(256) + "\t" + random(1000) + "\n"));
             }
