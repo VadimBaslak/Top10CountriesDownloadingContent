@@ -27,7 +27,7 @@ public class RecordingCountries {
                 if(secondPower>maxNumberIP) break;
             }
             if(secondPower!=maxNumberIP){
-                bufferWriter.write("<" + secondPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
+                bufferWriter.write("<" + secondPower + 1 + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
             }
 
 
