@@ -16,18 +16,19 @@ public class RecordingCountries {
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
 
+            long rangeLength = 10000;
             long firstPower = 0;
-            long secondPower = 10000;
+            long secondPower = firstPower + rangeLength;
             long maxNumberIP=((long)Math.pow(2,32)-1);
 
-            for (int NumberCountries = 0; NumberCountries < 1000000; NumberCountries++) {
+            for (int NumberCountries = 0; NumberCountries < 100000; NumberCountries++) {
                 bufferWriter.write("<" + firstPower + ">" + "-<" + secondPower + "> <" + randomCountryCode() + ">\n");
                 firstPower = secondPower + 1;
-                secondPower = secondPower + 10000;
-                if(secondPower>maxNumberIP) break;
-            }
-            if(secondPower!=maxNumberIP){
-                bufferWriter.write("<" + secondPower + 1 + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
+                secondPower = secondPower + rangeLength;
+                if((secondPower>=maxNumberIP)){
+                    bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
+                    break;
+                }
             }
 
 
