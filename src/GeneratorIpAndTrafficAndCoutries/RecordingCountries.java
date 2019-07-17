@@ -15,22 +15,21 @@ public class RecordingCountries {
 
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
-
-            long rangeLength = 10000;
-            long firstPower = 0;
-            long secondPower = firstPower + rangeLength;
-            long maxNumberIP=((long)Math.pow(2,32)-1);
-
-            for (int NumberCountries = 0; NumberCountries < 1000000; NumberCountries++) {
+            int rangeLength = 1000000000;
+            int firstPower = (int)Math.pow(2,31)+1;
+            int secondPower = firstPower + rangeLength;
+            int maxNumberIP=(int)Math.pow(2,31);
+            
+            for (int NumberCountries = 0; NumberCountries < 10; NumberCountries++) {
                 bufferWriter.write("<" + firstPower + ">" + "-<" + secondPower + "> <" + randomCountryCode() + ">\n");
                 firstPower = secondPower + 1;
                 secondPower = secondPower + rangeLength;
-                if(secondPower>=maxNumberIP){
+                if(secondPower >= (maxNumberIP - rangeLength)){
                     bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
                     break;
                 }
             }
-            if(secondPower<maxNumberIP){
+            if(secondPower < (maxNumberIP - rangeLength)){
                 bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
             }
 
