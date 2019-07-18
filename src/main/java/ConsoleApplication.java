@@ -7,10 +7,10 @@ import java.io.InputStreamReader;
 public class ConsoleApplication {
     public static void main(String[] args) {
         System.out.println("Hello, colleague! \n" +
-                "To generate IP-addresses and their traffic, enter: RecIP, \n" +
+                "To generate IP-addresses and their traffic, enter: recIp, \n" +
                 "(if you have a list of IP-addresses with traffic in a format \n" +
                 "xxx.xxx.xxx.xxx \\t <traffic>, add it to the folder src)\n" +
-                "To create IP-addresses ranges for different countries, enter: RecCountries,\n" +
+                "To create IP-addresses ranges for different countries, enter: recCountries,\n" +
                 "(if you have a list in a format <integer>-<integer> <country code>)\n" +
                 "To display Top countries by traffic load, enter: traffic\n" +
                 "To exit, enter: esc");
@@ -23,11 +23,11 @@ public class ConsoleApplication {
                 System.out.println("Invalid input");
             }
             switch (choice){
-                case "RecIP":
+                case "recIp":
                     RecordingIp.main();
                     System.out.println("Were generated IP-addresses and their traffic");
                     break;
-                case "RecCountries":
+                case "recCountries":
                     RecordingCountries.main();
                     System.out.println("Were generated intervals of addresses and their countries");
                     break;
@@ -43,7 +43,8 @@ public class ConsoleApplication {
             }
         }
     }
-    public static String getString() throws IOException {
+
+    private static String getString() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String s = br.readLine();
         return s;

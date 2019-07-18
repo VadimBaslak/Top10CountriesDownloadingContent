@@ -8,8 +8,8 @@ public class RecordingIp {
     public static void main() {
         String filePath = ".\\src\\IpAndTraffic.txt";
         try {
-            BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
-            for (int NumberNewRows = 0; NumberNewRows < 1000000; NumberNewRows++) {
+            BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, false));
+            for (int NumberNewRows = 0; NumberNewRows < 10; NumberNewRows++) {
                 bufferWriter.write((random(256) + "." + random(256) + "." + random(256) +
                         "." + random(256) + "\t" + random(1000) + "\n"));
             }
@@ -17,7 +17,6 @@ public class RecordingIp {
         } catch (IOException exception) {
             System.out.println("Input / Output error");
         }
-
     }
 
     private static String random(int range) {
