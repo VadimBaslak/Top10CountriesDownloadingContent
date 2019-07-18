@@ -9,7 +9,7 @@ public class RecordingIp {
         String filePath = ".\\src\\IpAndTraffic.txt";
         try {
             BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, false));
-            for (int NumberNewRows = 0; NumberNewRows < 10; NumberNewRows++) {
+            for (int NumberNewRows = 0; NumberNewRows < 1000000; NumberNewRows++) {
                 bufferWriter.write((random(256) + "." + random(256) + "." + random(256) +
                         "." + random(256) + "\t" + random(1000) + "\n"));
             }
