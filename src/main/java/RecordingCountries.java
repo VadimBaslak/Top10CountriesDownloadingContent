@@ -12,9 +12,8 @@ public class RecordingCountries {
 
     public static void main() {
         String filePath = ".\\src\\RangeIpCountries.txt";
-
         try {
-            BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, true));
+            BufferedWriter bufferWriter = new BufferedWriter(new FileWriter(filePath, false));
             int rangeLength = 10000;
             int firstPower = (int)Math.pow(2,31)+1;
             int secondPower = firstPower + rangeLength;
@@ -32,8 +31,6 @@ public class RecordingCountries {
             if(secondPower < (maxNumberIP - rangeLength)){
                 bufferWriter.write("<" + firstPower + ">" + "-<" + maxNumberIP + "> <" + randomCountryCode() + ">\n");
             }
-
-
             bufferWriter.close();
         } catch (IOException exception) {
             System.out.println("Input / Output error");
