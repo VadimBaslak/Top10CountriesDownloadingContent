@@ -34,10 +34,12 @@ public class IpConverterInt {
             String strLine;
             rangeIpCountries = new HashMap<>();
             listRangeIp = new ArrayList<>();
+            int leftLimit;
+            int rightLimit;
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathRangeIpCountries)));
             while ((strLine = br.readLine()) != null) {
-                int leftLimit = getLeftLimit(strLine);
-                int rightLimit = getRightLimit(strLine);
+                leftLimit = getLeftLimit(strLine);
+                rightLimit = getRightLimit(strLine);
                 listRangeIp.add(leftLimit);
                 listRangeIp.add(rightLimit);
                 rangeIpCountries.put(leftLimit,getCountriesCode(strLine));
@@ -58,12 +60,15 @@ public class IpConverterInt {
             countriesTraffic = new HashMap<>();
             BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filePathIPAndTraffic)));
             int sizeListRageIP = listRangeIp.size();
+            int traffic;
+            int ipNumber;
+            int lowerBound;
             while ((strLine = br.readLine()) != null) {
                 String ipString = strLine.substring(0, 15);
                 String trafficString = strLine.substring(16);
-                int traffic = Integer.parseInt(trafficString);
-                int ipNumber = ipConverterInt(ipString);
-                int lowerBound = 0;
+                traffic = Integer.parseInt(trafficString);
+                ipNumber = ipConverterInt(ipString);
+                lowerBound = 0;
                 addIpCountriesTraffic(ipNumber, traffic, lowerBound, sizeListRageIP);
             }
             viewTop10CountriesDownloadingContent();
